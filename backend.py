@@ -73,7 +73,8 @@ def detect_exercise_titles(image, keywords):
     return title_y_coords
 
 def crop_and_save_exercises(image, title_y_coords, output_dir):
-    padding_pixels = 20
+    padding_pixels = 30
+    output_paths = []
 
     for i, start_y_original in enumerate(title_y_coords):
         start_y = max(0, start_y_original - padding_pixels)
@@ -84,6 +85,10 @@ def crop_and_save_exercises(image, title_y_coords, output_dir):
 
         output_path = os.path.join(output_dir, f"exercise_{i+1}.png")
         cv2.imwrite(output_path, cropped_image)
+        output_paths.append(output_path)
+    
+    # Print file paths for Electron to capture
+    print(','.join(output_paths))
 
     
 
@@ -91,13 +96,14 @@ def main():
     parser = argparse.ArgumentParser(description="Extract exercises from a PDF file.")
     parser.add_argument("--pdf_path", type=str, required=True, help="The path to the input PDF file.")
     parser.add_argument("--output_dir", type=str, required=True, help="The path to the output directory.")
+    parser.add_argument("--keywords", type=str, required=True, help="A comma-separated list of keywords to detect.")
     args = parser.parse_args()
 
     if not os.path.exists(args.output_dir):
         os.makedirs(args.output_dir)
 
     stitched_image = convert_and_stitch_pdf_pages(args.pdf_path)
-    keywords = ["Tutoraufgabe", "Exercise", "Hausaufgabe"]
+    keywords = [k.strip() for k in args.keywords.split(',')]
     title_y_coords = detect_exercise_titles(stitched_image, keywords)
     crop_and_save_exercises(stitched_image, title_y_coords, args.output_dir)
 

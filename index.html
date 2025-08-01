@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YVault</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app-container">
+        <div id="sidebar">
+            <h1>YVault</h1>
+            <input type="search" id="search-box" placeholder="Search exercises...">
+            <button id="import-btn">Import PDF</button>
+            <div id="course-list"></div>
+            <button id="settings-btn" class="settings-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                    </path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="resize-handle"></div>
+
+        <div id="main-content">
+            <div id="welcome-message">
+                <h2>Welcome to YVault</h2>
+                <p>Import a PDF to extract and view exercises</p>
+            </div>
+
+            <div id="exercise-viewer" style="display: none;">
+                <h2 id="exercise-title"></h2>
+                <img id="exercise-image" alt="Exercise" />
+                <div id="tag-area">
+                    <div id="tag-list"></div>
+                    <input type="text" id="tag-input" placeholder="Add a tag..." />
+                </div>
+            </div>
+
+            <div id="loading-indicator" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>Extracting exercises...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for metadata input -->
+    <div id="metadata-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Import PDF</h3>
+            <form id="metadata-form">
+                <div class="form-group">
+                    <label for="course-name">Course Name:</label>
+                    <input type="text" id="course-name" required placeholder="e.g., Mathematics 101">
+                </div>
+
+                <div class="form-group">
+                    <label for="week-number">Week Number:</label>
+                    <input type="number" id="week-number" required min="1" placeholder="e.g., 1">
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="cancel-btn">Cancel</button>
+                    <button type="submit" id="start-extraction-btn">Start Extraction</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Settings</h3>
+            <form id="settings-form">
+                <div class="form-group">
+                    <label for="keywords-input">Exercise Keywords:</label>
+                    <input type="text" id="keywords-input" placeholder="e.g., Tutoraufgabe,Exercise,Hausaufgabe">
+                    <p class="form-help">Comma-separated keywords to detect exercise titles</p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="settings-cancel-btn">Cancel</button>
+                    <button type="submit" id="settings-save-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+
+</html>
