@@ -1,7 +1,7 @@
 {
   "name": "yvault",
-  "version": "1.0.0",
-  "description": "YVault - An Electron application for extracting and viewing PDF exercises",
+  "version": "0.2.0",
+  "description": "YVault",
   "main": "main.js",
   "homepage": ".",
   "scripts": {
@@ -19,7 +19,7 @@
     "exercises",
     "education"
   ],
-  "author": "YVault Team",
+  "author": "Yll Kryeziu",
   "license": "ISC",
   "dependencies": {
     "electron-store": "^8.1.0"
