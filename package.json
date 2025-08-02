@@ -3,17 +3,68 @@
   "version": "1.0.0",
   "description": "YVault - An Electron application for extracting and viewing PDF exercises",
   "main": "main.js",
+  "homepage": ".",
   "scripts": {
     "start": "electron .",
+    "build": "npm run build:python && npm run build:electron",
+    "build:python": "pyinstaller --name \"extractor\" --onefile --clean --distpath \"build\" --workpath \"pyinstaller_temp\" --add-data \"vendor/poppler-24.02.0-0:poppler\" --add-data \"vendor/tesseract:tesseract\" backend.py",
+    "build:electron": "electron-builder",
+    "dist": "npm run build && electron-builder --publish=never",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "electron",
+    "pdf",
+    "exercises",
+    "education"
+  ],
+  "author": "YVault Team",
   "license": "ISC",
   "dependencies": {
     "electron-store": "^8.1.0"
   },
   "devDependencies": {
-    "electron": "^37.2.5"
+    "electron": "^37.2.5",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.yvault.app",
+    "productName": "YVault",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "**/*",
+      "!release/**/*",
+      "!pyinstaller_temp/**/*",
+      "!venv/**/*",
+      "!*.spec"
+    ],
+    "extraResources": [
+      {
+        "from": "build/extractor",
+        "to": "extractor"
+      }
+    ],
+    "mac": {
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.education",
+      "identity": null,
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ]
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   }
 }

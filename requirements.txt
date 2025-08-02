@@ -1,6 +1,6 @@
 Pillow>=9.0.0
 opencv-python>=4.5.0
-pdf2image>=3.1.0
+pdf2image
 numpy>=1.21.0
 pytesseract>=0.3.10
 argparse

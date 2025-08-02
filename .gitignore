@@ -17,7 +17,7 @@ pip-log.txt
 # Node.js/Electron
 node_modules/
 dist/
-build/
+build/extractor/
 .npm
 .npmrc
 npm-debug.log*
@@ -48,3 +48,19 @@ out/
 .env.development.local
 .env.test.local
 .env.production.local
+
+# PyInstaller artifacts
+*.spec
+warn-*.txt
+xref-*.html
+
+# Keep the bundled executable but ignore build artifacts
+!build/extractor
+build/extractor/
+
+# Keep assets directory
+!assets/
+vendor/
+scripts/
+pyinstaller_temp/
+build/

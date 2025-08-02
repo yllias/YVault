@@ -9,6 +9,7 @@ function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 1200,
         height: 800,
+        icon: path.join(__dirname, 'assets', 'icon.png'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false,
@@ -60,10 +61,14 @@ ipcMain.handle('run-extraction', async (event, args) => {
         // Get custom keywords from store
         const settings = store.get('settings', { keywords: 'Tutoraufgabe,Exercise,Hausaufgabe' });
 
-        // Execute Python script
+        // Execute bundled Python executable
         return new Promise((resolve, reject) => {
-            const pythonProcess = spawn('python3', [
-                path.join(__dirname, 'backend.py'),
+            const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged;
+            const extractorPath = isDev
+                ? path.join(__dirname, 'build', 'extractor')
+                : path.join(process.resourcesPath, 'extractor');
+
+            const pythonProcess = spawn(extractorPath, [
                 '--pdf_path', pdfPath,
                 '--output_dir', outputDir,
                 '--keywords', settings.keywords

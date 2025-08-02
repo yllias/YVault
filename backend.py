@@ -1,4 +1,5 @@
 
+import sys
 import argparse
 import os
 import cv2
@@ -10,11 +11,32 @@ from pdf2image import convert_from_path
 
 import pytesseract
 
+# --- Runtime path configuration for bundled dependencies --- #
+if getattr(sys, 'frozen', False):
+    # When running as a bundled app (PyInstaller), all dependencies are in a temporary folder.
+    # We need to update the PATH and tell pytesseract where to find its data.
+    base_path = sys._MEIPASS
+
+    # Configure Poppler
+    poppler_bin_path = os.path.join(base_path, 'poppler', 'bin')
+    os.environ['PATH'] = poppler_bin_path + os.pathsep + os.environ.get('PATH', '')
+
+    # Configure Tesseract
+    tesseract_path = os.path.join(base_path, 'tesseract', 'bin', 'tesseract')
+    pytesseract.pytesseract.tesseract_cmd = tesseract_path
+
+    # Tesseract also needs to know where its data files are.
+    tessdata_path = os.path.join(base_path, 'tesseract', 'share', 'tessdata')
+    os.environ['TESSDATA_PREFIX'] = tessdata_path
+# --- End of path fix --- #
+
 
 def is_exercise_title(text, keywords, word_num):
     return text.strip() in keywords and word_num == 1
 
 def convert_and_stitch_pdf_pages(pdf_path):
+    # When running as a bundled app, Poppler is found via the PATH environment variable
+    # that was set at the beginning of the script.
     images = convert_from_path(pdf_path)
     cropped_images = []
     for image in images:
