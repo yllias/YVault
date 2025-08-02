@@ -5,12 +5,13 @@
   "main": "main.js",
   "homepage": ".",
   "scripts": {
-    "start": "electron .",
-    "build": "npm run build:python && npm run build:electron",
+    "start": "npm run post-css && electron .",
+    "build": "npm run post-css && npm run build:python && npm run build:electron",
     "build:python": "pyinstaller --name \"extractor\" --onefile --clean --distpath \"build\" --workpath \"pyinstaller_temp\" --add-data \"vendor/poppler-24.02.0-0:poppler\" --add-data \"vendor/tesseract:tesseract\" backend.py",
     "build:electron": "electron-builder",
     "dist": "npm run build && electron-builder --publish=never",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "post-css": "postcss style.css -o style.inline.css"
   },
   "keywords": [
     "electron",
@@ -25,7 +26,9 @@
   },
   "devDependencies": {
     "electron": "^37.2.5",
-    "electron-builder": "^26.0.12"
+    "electron-builder": "^26.0.12",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.1.0"
   },
   "build": {
     "appId": "com.yvault.app",

@@ -9,6 +9,7 @@ function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 1200,
         height: 800,
+        show: false, // Initially hide the window
         icon: path.join(__dirname, 'assets', 'icon.png'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
@@ -18,6 +19,11 @@ function createWindow() {
     });
 
     mainWindow.loadFile('index.html');
+
+    // Show the window only when it's ready to avoid visual flashes
+    mainWindow.once('ready-to-show', () => {
+        mainWindow.show();
+    });
 
     // Send persisted data to renderer after content is loaded
     mainWindow.webContents.once('did-finish-load', () => {

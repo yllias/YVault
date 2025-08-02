@@ -5,25 +5,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YVault</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.inline.css">
 </head>
 
 <body>
     <div id="app-container">
         <div id="sidebar">
-            <h1>YVault</h1>
-            <input type="search" id="search-box" placeholder="Search exercises...">
-            <button id="import-btn">Import PDF</button>
+            <div class="sidebar-header">
+                <h1>YVault</h1>
+            </div>
+            <div class="sidebar-actions">
+                <input type="search" id="search-box" placeholder="Search exercises...">
+                <button id="import-btn">Import PDF</button>
+            </div>
+            <div class="sidebar-nav">
+                <label for="sort-by">Sort by:</label>
+                <select id="sort-by">
+                    <option value="course-asc">Alphabetically (A-Z)</option>
+                    <option value="course-desc">Alphabetically (Z-A)</option>
+                    <option value="date-newest">Date (Newest)</option>
+                    <option value="date-oldest">Date (Oldest)</option>
+                </select>
+            </div>
             <div id="course-list"></div>
-            <button id="settings-btn" class="settings-button">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path
-                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-                    </path>
-                </svg>
-            </button>
+            <div class="sidebar-footer">
+                <button id="settings-btn" class="settings-button">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    <span>Settings</span>
+                </button>
+            </div>
         </div>
 
         <div id="resize-handle"></div>
@@ -57,7 +73,8 @@
             <form id="metadata-form">
                 <div class="form-group">
                     <label for="course-name">Course Name:</label>
-                    <input type="text" id="course-name" required placeholder="e.g., Mathematics 101">
+                    <input type="text" id="course-name" list="course-names" required placeholder="e.g., Mathematics 101">
+                    <datalist id="course-names"></datalist>
                 </div>
 
                 <div class="form-group">
@@ -80,8 +97,8 @@
             <form id="settings-form">
                 <div class="form-group">
                     <label for="keywords-input">Exercise Keywords:</label>
-                    <input type="text" id="keywords-input" placeholder="e.g., Tutoraufgabe,Exercise,Hausaufgabe">
-                    <p class="form-help">Comma-separated keywords to detect exercise titles</p>
+                    <div id="keyword-tag-list"></div>
+                    <input type="text" id="keywords-input" placeholder="Add a keyword and press Enter">
                 </div>
 
                 <div class="form-actions">
